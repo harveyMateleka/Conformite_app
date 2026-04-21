@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Fonction;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -29,6 +30,26 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+        public function connexion(Request $request){
+
+     $request->validate([
+            "email"=> "required|email",
+            "password"=> "required",
+    ]);
+
+    if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
+
+    $request->session()->regenerate();
+
+     return redirect()->route('home');; // 🔥 important
+}
+    
+        return redirect()->route('login');
     }
 
     /**
