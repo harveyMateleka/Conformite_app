@@ -12,7 +12,10 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
+        $data=[
+            "code_dossier"=>$this->generateRandomString()
+        ];
+            return view("client",$data);
     }
 
     /**
@@ -37,6 +40,17 @@ class ClientsController extends Controller
     public function show(Clients $clients)
     {
         //
+    }
+
+        function generateRandomString($length = 6)
+    {
+        $characters = 'A' . mt_rand(1000000000, 9999999999);
+        $charactersLength = strlen($characters);
+        $randomString = 'CONF-';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     /**
